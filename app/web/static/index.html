@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>IoT Radar</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="static/style.css">
+    </head>
+    <body>
+        <header>
+            <div class="header-logo" aria-hidden="true">
+                <i data-lucide="shield-check" style="width:20px;height:20px;stroke:currentColor;fill:none"></i>
+            </div>
+            <span class="header-title">IoT Radar</span>
+            <div class="header-right">
+                <span class="status-badge" id="status-badge">Desconectado</span>
+                <button class="btn-primary btn-scan desktop-only" id="btn-scan-desktop">Escanear ahora</button>
+            </div>
+        </header>
+        <div class="metrics-bar" role="region" aria-label="Resumen de seguridad">
+            <div class="score-widget">
+                <svg
+                    width="80"
+                    height="80"
+                    viewBox="0 0 80 80"
+                    aria-label="Score de seguridad"
+                >
+                    <circle
+                        cx="40"
+                        cy="40"
+                        r="34"
+                        fill="none"
+                        stroke="var(--color-border)"
+                        stroke-width="6"
+                    />
+                    <circle
+                        id="score-arc"
+                        cx="40"
+                        cy="40"
+                        r="34"
+                        fill="none"
+                        stroke="var(--color-border)"
+                        stroke-width="6"
+                        stroke-linecap="round"
+                        transform="rotate(-90 40 40)"
+                    />
+                    <text
+                        id="score-text"
+                        x="40"
+                        y="45"
+                        text-anchor="middle"
+                        font-family="Inter, sans-serif"
+                        font-size="22"
+                        font-weight="600"
+                        fill="var(--color-text)"
+                    >–</text>
+                </svg>
+                <div>
+                    <div class="score-label">Score</div>
+                    <div class="score-sublabel">Seguridad LAN</div>
+                </div>
+            </div>
+            <div class="severity-counters">
+                <div class="sev-counter">
+                    <span class="sev-num" id="cnt-critical">0</span>
+                    <span class="badge badge-critical">Critical</span>
+                </div>
+                <div class="sev-counter">
+                    <span class="sev-num" id="cnt-high">0</span>
+                    <span class="badge badge-high">High</span>
+                </div>
+                <div class="sev-counter">
+                    <span class="sev-num" id="cnt-medium">0</span>
+                    <span class="badge badge-medium">Medium</span>
+                </div>
+                <div class="sev-counter">
+                    <span class="sev-num" id="cnt-low">0</span>
+                    <span class="badge badge-low">Low</span>
+                </div>
+            </div>
+        </div>
+        <nav class="tabs-nav" role="tablist" aria-label="Secciones del panel">
+            <button
+                class="tab active"
+                role="tab"
+                data-tab="alerts"
+                aria-selected="true"
+                aria-controls="panel-alerts"
+            >Alertas</button>
+            <button
+                class="tab"
+                role="tab"
+                data-tab="devices"
+                aria-selected="false"
+                aria-controls="panel-devices"
+            >Red LAN</button>
+            <button
+                class="tab"
+                role="tab"
+                data-tab="zigbee"
+                aria-selected="false"
+                aria-controls="panel-zigbee"
+            >Zigbee</button>
+        </nav>
+        <div class="tab-panels">
+            <div class="tab-panel active" id="panel-alerts" role="tabpanel">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="min-width:140px;width:140px">Timestamp</th>
+                                <th style="min-width:90px;width:90px">Severidad</th>
+                                <th style="min-width:80px;width:80px">Categoría</th>
+                                <th style="min-width:180px;width:180px">Título</th>
+                                <th style="width:28%;max-width:28%">Detalle</th>
+                                <th style="width:28%;max-width:28%">Recomendación</th>
+                                <th style="min-width:80px;width:80px"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="alerts-tbody">
+                            <tr>
+                                <td colspan="7" class="empty-state">Cargando alertas…</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-panel" id="panel-devices" role="tabpanel">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>MAC</th>
+                                <th>IP</th>
+                                <th>Vendor</th>
+                                <th>Tipo</th>
+                                <th>Puertos abiertos</th>
+                                <th>CVEs</th>
+                            </tr>
+                        </thead>
+                        <tbody id="devices-tbody">
+                            <tr>
+                                <td colspan="6" class="empty-state">Cargando dispositivos…</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-panel" id="panel-zigbee" role="tabpanel">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>IEEE</th>
+                                <th>Nombre</th>
+                                <th>Confiable</th>
+                                <th>Último visto</th>
+                                <th>LQI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="zigbee-tbody">
+                            <tr>
+                                <td colspan="5" class="empty-state">Cargando dispositivos Zigbee…</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <button class="fab btn-scan" id="btn-scan-fab" aria-label="Escanear red ahora">
+            Escanear ahora
+        </button>
+        <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+        <script src="static/app.js" defer></script>
+        <script>lucide.createIcons();</script>
+    </body>
+</html>

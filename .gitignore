@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Base de datos (volumen de runtime)
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# Secretos y configuración local
+.env
+.env.*
+!.env.example
+secrets.yaml
+
+# Windows
+Thumbs.db
+desktop.ini
+.vscode/
+
+# Tests
+.pytest_cache/
+
+# Notas locales
+PENDIENTE.md
